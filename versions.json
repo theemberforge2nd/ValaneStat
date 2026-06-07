@@ -2,5 +2,7 @@
   "existing": ["0.0.0","1.0.0"],
   "last": "1.0.0",
   "available": ["1.0.0"],
-  "forceUpdate": ["0.0.0 to 1.0.0"]
+  "forceUpdate": [
+    "0.0.0 to 1.0.0"
+  ]
 }
