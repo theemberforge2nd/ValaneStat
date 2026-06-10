@@ -1,6 +1,6 @@
 {
   "files": [
-    "main.py",
+    "main.pyw",
     "updater.py",
     "ui.py",
     "version.json",
