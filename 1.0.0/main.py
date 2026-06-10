@@ -130,7 +130,7 @@ async def api_stats_players(player: Annotated[str, Form()]):
 if __name__ == "__main__":
     
     startMethod = 0
-    DEV = True
+    DEV = False
 
     if not DEV:
         updater.checkUpdate()
