@@ -1,0 +1,117 @@
+/* Dark theme — violet → pink gradient accent + nested bubble styles */
+:root{
+  --bg:#060710;
+  --panel:#0b1220;
+  --muted:#9aa4b2;
+  --accent1:#7c3aed; /* violet */
+  --accent2:#f472b6; /* pink */
+  --glass: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: radial-gradient(600px circle at 10% 10%, rgba(124,58,237,0.06), transparent), radial-gradient(400px circle at 90% 90%, rgba(244,114,182,0.04), transparent), var(--bg);
+  color:#e6eef8;
+}
+.container{max-width:1100px;margin:28px auto;padding:0 20px}
+.site-header{padding:18px 0}
+.site-header .header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:36px}
+.site-header h1{margin:0;font-size:20px;font-weight:600;letter-spacing:0.2px}
+nav{display:flex;gap:10px}
+nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;background:transparent;transition:all .22s ease}
+nav a:hover{color:#fff;transform:translateY(-3px);background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 6px 18px rgba(124,58,237,0.12)}
+.buttons{margin-top:14px}
+button{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600;box-shadow:0 8px 20px rgba(2,6,23,0.6);transition:transform .18s ease,box-shadow .18s ease}
+button:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(124,58,237,0.18)}
+.api-output{margin-top:16px}
+.site-footer{padding:18px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.02);margin-top:28px}
+
+/* Bubbles and grid */
+.bubble:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 18px 40px rgba(124,58,237,0.18)}
+.bubble-title{margin:0 0 8px 0;font-size:15px;font-weight:700}
+.bubble-content .row{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;font-size:13px;color:var(--muted)}
+.bubble .key{opacity:0.85}
+.bubble .val{font-weight:600;color:#fff}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.06);margin-right:6px;font-size:12px}
+.muted{color:var(--muted);font-size:13px}
+.mini-list{display:flex;flex-direction:column;gap:6px}
+.mini-row{font-size:13px;color:var(--muted)}
+.mini-key{color:var(--muted);margin-right:6px}
+.mini-val{color:#fff}
+
+/* Nested grid / nested bubble styles */
+/* Use a responsive CSS grid so nested bubbles expand to fill available width.
+  Each nested bubble is at least 140px wide and grows to share remaining space. */
+.nested-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:10px;align-items:stretch}
+.nested-bubble{flex:0 1 auto;min-width:120px;padding:8px;border-radius:10px;background:linear-gradient(135deg, rgba(124,58,237,0.16), rgba(244,114,182,0.08));color:#fff;font-size:13px;box-shadow:0 6px 18px rgba(2,6,23,0.45);transition:transform .14s ease;width:100%}
+.nested-bubble:hover{transform:translateY(-4px)}
+.nested-bubble .bubble-title{font-size:13px;margin-bottom:6px}
+.nested-bubble .bubble-content .row{font-size:12px;color:var(--muted)}
+/* If a nested bubble is marked full, make it span the entire nested grid */
+.nested-bubble.bubble--full{grid-column:1/-1;width:100%}
+
+/* Force nested grids inside a bubble to use a single column so nested
+  bubbles take the full available width of their parent bubble. */
+.bubble .nested-grid{grid-template-columns:1fr}
+
+/* Ensure nested nested grids (second-level) are single-column and items expand */
+.bubble .nested-grid .nested-grid{grid-template-columns:1fr !important}
+.bubble .nested-grid .nested-bubble{width:100% !important;max-width:100% !important;min-width:0}
+
+/* loader & errors */
+.loader{padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--muted)}
+.error{color:#ffb4c6}
+
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+
+/* Responsive tweaks */
+@media (max-width:760px){
+  .site-header .header-inner{flex-direction:column;gap:12px}
+  .bubble{width:100%;max-width:520px}
+}
+
+/* make sure body background doesn't repeat */
+body{
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* flex behavior: let items wrap; very tall items get full-width */
+.bubble-grid{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+.bubble{flex:0 1 260px;min-width:220px;max-width:340px;background:linear-gradient(135deg, rgba(124,58,237,0.12), rgba(244,114,182,0.06));border-radius:14px;padding:12px 14px;backdrop-filter:blur(6px);box-shadow:0 10px 30px rgba(2,6,23,0.6);color:#eaf0ff;animation:pop .32s cubic-bezier(.2,.9,.2,1) both;transition:transform .18s ease,box-shadow .18s ease}
+.bubble--full{flex-basis:100%;max-width:100%;width:100%}
+
+/* nested bubble full width when marked */
+.nested-bubble--full, .nested-bubble.bubble--full{flex-basis:100%;max-width:100%;width:100%}
+.bubble:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 18px 40px rgba(124,58,237,0.18)}
+.bubble-title{margin:0 0 8px 0;font-size:15px;font-weight:700}
+.bubble-content .row{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;font-size:13px;color:var(--muted)}
+.bubble .key{opacity:0.85}
+.bubble .val{font-weight:600;color:#fff}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.06);margin-right:6px;font-size:12px}
+.muted{color:var(--muted);font-size:13px}
+.mini-list{display:flex;flex-direction:column;gap:6px}
+.mini-row{font-size:13px;color:var(--muted)}
+.mini-key{color:var(--muted);margin-right:6px}
+.mini-val{color:#fff}
+
+/* Nested grid / nested bubble styles */
+.nested-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:10px;align-items:stretch}
+.nested-bubble{flex:0 1 auto;min-width:120px;padding:8px;border-radius:10px;background:linear-gradient(135deg, rgba(124,58,237,0.16), rgba(244,114,182,0.08));color:#fff;font-size:13px;box-shadow:0 6px 18px rgba(2,6,23,0.45);transition:transform .14s ease;width:100%}
+.nested-bubble:hover{transform:translateY(-4px)}
+.nested-bubble .bubble-title{font-size:13px;margin-bottom:6px}
+.nested-bubble .bubble-content .row{font-size:12px;color:var(--muted)}
+.nested-bubble.bubble--full{grid-column:1/-1;width:100%}
+
+/* loader & errors */
+.loader{padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--muted)}
+.error{color:#ffb4c6}
+
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+
+/* Responsive tweaks */
+@media (max-width:760px){
+  .site-header .header-inner{flex-direction:column;gap:12px}
+  .bubble{width:100%;max-width:520px}
+}

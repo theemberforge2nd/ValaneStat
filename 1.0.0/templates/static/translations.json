@@ -1,0 +1,18 @@
+{
+  "player": "Joueur",
+  "name": "Nom",
+  "owner": "Propriétaire",
+  "displayName": "Pseudo",
+  "shop": "Boutique",
+  "price": "Prix",
+  "quantity": "Quantité",
+  "id": "ID",
+  "createdAt": "Créé le",
+  "updatedAt": "Mis à jour",
+  "count": "Nombre",
+  "items": "Items",
+  "seller": "Vendeur",
+  "buyout": "Achat immédiat",
+  "averagePrice": "Prix moyen",
+  "oneblock_world": "Monde OneBlock"
+}
