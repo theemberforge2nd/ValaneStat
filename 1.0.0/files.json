@@ -8,7 +8,7 @@
     "templates/index.html",
     "templates/static/style.css",
     "templates/static/app.js",
-    "templates/statics/translations.json",
+    "templates/static/translations.json",
     
     "templates/pages/about.html",
     "templates/pages/stats/ah.html",
