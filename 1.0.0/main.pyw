@@ -27,6 +27,8 @@ import uvicorn
 import ui
 import threading
 import os
+import sys
+import subprocess
 import requests
 import updater
 import time
@@ -36,7 +38,12 @@ import time
 # ============================================ #
 # Commandes de démarrage
 # ============================================ #
-os.system("cls" if os.name == "nt" else "clear")
+# Clear console only if running in a real terminal
+try:
+    if getattr(sys, "stdout", None) and sys.stdout.isatty():
+        os.system("cls" if os.name == "nt" else "clear")
+except Exception:
+    pass
 
 
 
@@ -136,9 +143,18 @@ if __name__ == "__main__":
         updater.checkUpdate()
 
     if startMethod == 0:
-        # Start the FastAPI server in a background thread, run the GUI in main thread
-        server_thread = threading.Thread(target=lambda: uvicorn.run(app, host=HOST, port=PORT), daemon=True)
-        server_thread.start()
+        # Start the FastAPI server as a detached subprocess so it doesn't depend on the parent terminal
+        try:
+            cmd = [sys.executable, "-m", "uvicorn", "main:app", "--host", HOST, "--port", str(PORT)]
+            if os.name == "nt":
+                creationflags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
+                subprocess.Popen(cmd, cwd=str(BASE_DIR), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL, creationflags=creationflags)
+            else:
+                subprocess.Popen(cmd, cwd=str(BASE_DIR), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL, preexec_fn=os.setsid)
+        except Exception:
+            # Fallback to starting uvicorn in a background thread
+            server_thread = threading.Thread(target=lambda: uvicorn.run(app, host=HOST, port=PORT), daemon=True)
+            server_thread.start()
 
         time.sleep(0.2)
 
