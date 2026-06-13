@@ -1,0 +1,7 @@
+requests
+customtkinter
+PyQt6
+PyQt6-WebEngine
+fastapi
+uvicorn
+python-multipart
