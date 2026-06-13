@@ -1,6 +1,0 @@
-requests
-customtkinter
-PyQt6
-fastapi
-uvicorn
-typing
